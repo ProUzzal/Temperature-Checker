@@ -79,7 +79,7 @@
 
       const fetchDisplayData = (location) => {
         fetch(
-          `http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=d22de20bf7e4d5d3981eea3596b26d6b`
+          `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=d22de20bf7e4d5d3981eea3596b26d6b`
         )
           .then((res) => res.json())
           .then((data) => {
