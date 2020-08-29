@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background: url(images/bg-image.jpg) no-repeat;
+        background-size: cover;
+        height: 100vh;
+      }
+      #inputId {
+        font-size: 20px;
+        padding: 30px;
+      }
+      #city {
+        font-size: 50px;
+      }
+      img {
+        width: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <form class="col-md-6 m-auto py-5">
+        <div class="input-group mb-3">
+          <input
+            id="inputId"
+            type="text"
+            class="form-control"
+            placeholder="Enter a location for Weather ..."
+          />
+          <div class="input-group-append">
+            <button id="searchButton" type="button" class="btn btn-danger">
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="weather-status text-white text-center">
+        <div>
+          <img
+            id="w-icon"
+            src="https://openweathermap.org/img/wn/02d@2x.png"
+            alt=""
+          />
+        </div>
+        <h1 id="city">Dhaka</h1>
+        <h3><span id="temp">38.06</span>&deg;C</h3>
+        <h1 class="lead">Clouds</h1>
+      </div>
+    </div>
+
+    <script>
+      const inputValue = document.querySelector("#inputId");
+      const city = document.querySelector("#city");
+      const temperature = document.querySelector("#temp");
+      const leads = document.querySelector(".lead");
+      const locationIcon = document.querySelector("#w-icon");
+
+      document
+        .querySelector("#searchButton")
+        .addEventListener("click", function () {
+          fetchDisplayData(inputValue.value);
+        });
+
+      const fetchDisplayData = (location) => {
+        fetch(
+          `http://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=d22de20bf7e4d5d3981eea3596b26d6b`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            temperature.innerText = Math.round(data.main.temp);
+            city.innerText = data.name;
+            leads.innerText = data.weather[0].main;
+            locationIcon.setAttribute(
+              "src",
+              `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+            );
+            document.querySelector("#inputId").value = "";
+          });
+      };
+      //Default Parameter
+      fetchDisplayData("Dhaka");
+    </script>
+  </body>
+</html>
+
+<!-- Use of $ sine in line number 72 and use of setAttribute in an image -->
